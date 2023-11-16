@@ -120,7 +120,6 @@ dependencies:
   - numexpr=2.8.4=py38h57a7bef_1
   - numpy=1.24.3=py38h57a7bef_0
   - numpy-base=1.24.3=py38hc93c6d9_0
-  - openai=0.27.4=py38hecd8cb5_0
   - openjpeg=2.4.0=h66ea3da_0
   - openpyxl=3.0.10=py38hca72f7f_0
   - openssl=3.0.12=hca72f7f_0
@@ -175,7 +174,6 @@ dependencies:
   - setuptools=68.0.0=py38hecd8cb5_0
   - sip=6.7.12=py38hcec6c5f_0
   - six=1.16.0=pyhd3eb1b0_1
-  - sniffio=1.2.0=py38hecd8cb5_1
   - soupsieve=2.5=py38hecd8cb5_0
   - sqlite=3.41.2=h6c40b1e_0
   - stack_data=0.2.0=pyhd3eb1b0_0
@@ -206,4 +204,23 @@ dependencies:
   - zipp=3.11.0=py38hecd8cb5_0
   - zlib=1.2.13=h4dc903c_0
   - zstd=1.5.5=hc035e20_0
+  - pip:
+      - annotated-types==0.6.0
+      - distro==1.8.0
+      - exceptiongroup==1.1.3
+      - h11==0.14.0
+      - httpcore==1.0.2
+      - httpx==0.25.1
+      - openai==1.2.4
+      - outcome==1.3.0.post0
+      - pydantic==2.5.1
+      - pydantic-core==2.14.3
+      - python-dotenv==1.0.0
+      - selenium==4.15.2
+      - sniffio==1.3.0
+      - sortedcontainers==2.4.0
+      - trio==0.23.1
+      - trio-websocket==0.11.1
+      - webdriver-manager==4.0.1
+      - wsproto==1.2.0
 prefix: /opt/homebrew/Caskroom/miniconda/base/envs/SmartHtml
