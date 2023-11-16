@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Data Analysis Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<div class="container mt-5">
+    <h2 id="page-title">Smart Data Analysis</h2>
+    <div class="row">
+    
+        <div class="col-md-9">
+            <div id="chart-block" class="mb-4">
+                <canvas id="dataChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div id="aggregation-block" class="mb-3">
+                <button type="button" class="btn btn-primary me-2" data-aggregate="sum">SUM</button>
+                <button type="button" class="btn btn-primary me-2" data-aggregate="avg">AVERAGE</button>
+                <button type="button" class="btn btn-primary me-2" data-aggregate="max">MAX</button>
+                <button type="button" class="btn btn-primary" data-aggregate="min">MIN</button>
+            </div>
+            
+            <div id="upload-block" class="mb-3">
+                <label for="csvFileInput" class="form-label">Choose your CSV</label>
+                <input type="file" id="csvFileInput" accept=".csv" class="form-control">
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Remain unchanged from the original implementation
+
+// Initial demo chart using Chart.js
+const ctx = document.getElementById('dataChart').getContext('2d');
+const dataChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+        datasets: [{
+            label: 'Dataset 1',
+            data: [12, 19, 3, 5, 2, 3],
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+// Handle CSV file input
+document.getElementById('csvFileInput').addEventListener('change', function (event) {
+    // Implement file reading and data processing logic here
+    console.log(event.target.files[0].name + ' selected');
+});
+
+// Handle aggregation button clicks
+const aggregateButtons = document.querySelectorAll('#aggregation-block button');
+aggregateButtons.forEach(button => {
+    button.addEventListener('click', function (event) {
+        // Implement aggregation function logic here
+        console.log(event.target.dataset.aggregate + ' function selected');
+    });
+});
+</script>
+
+</body>
+</html>
