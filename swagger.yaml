@@ -1,0 +1,174 @@
+openapi: 3.0.0
+info:
+  title: Web Page Management API
+  version: 1.0.0
+  description: API for creating and managing web pages through chat interactions.
+
+servers:
+  - url: http://localhost:5000
+    description: Development server
+
+paths:
+  /api/session:
+    post:
+      summary: Initiates a session
+      description: Creates a new session with initial requirements for web page creation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requirements:
+                  type: string
+                  description: Detailed text of user's web page requirements.
+      responses:
+        '201':
+          description: Session created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+
+  /api/session/{session_id}:
+    get:
+      summary: Retrieve a session
+      description: Fetches a session object using the session ID.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Session data retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '404':
+          description: Session not found.
+
+  /api/session/{session_id}/webpage/{version}:
+    put:
+      summary: Update a webpage version
+      description: Adds or saves comments on a specific webpage version.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: version
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebPage'
+      responses:
+        '200':
+          description: Webpage updated successfully.
+        '404':
+          description: Webpage not found.
+
+    get:
+      summary: Get a specific webpage version
+      description: Fetches a webpage object based on session ID and version.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: version
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Webpage data retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebPage'
+        '404':
+          description: Webpage not found.
+
+  /api/session/{session_id}/webpage/{version}/generate:
+    post:
+      summary: Generate a new webpage version
+      description: Triggers the generation of a new webpage version using OpenAI.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: version
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                openai_token:
+                  type: string
+                  description: OpenAI API token for processing.
+      responses:
+        '201':
+          description: New webpage version generated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebPage'
+        '400':
+          description: Invalid request.
+        '404':
+          description: Session or webpage not found.
+
+components:
+  schemas:
+    Session:
+      type: object
+      properties:
+        session_id:
+          type: string
+        initial_requirements:
+          type: string
+        web_pages:
+          type: array
+          items:
+            $ref: '#/components/schemas/WebPage'
+
+    WebPage:
+      type: object
+      properties:
+        version:
+          type: integer
+        preview_link:
+          type: string
+          format: uri
+        user_comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserComment'
+    UserComment:
+      type: object
+      properties:
+        id:
+          type: string
+        comment:
+          type: string

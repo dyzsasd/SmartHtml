@@ -1,0 +1,20 @@
+You are a Python developer tasked with designing a web service to support a web application. This application enables users to create and manage web pages through chat interactions.
+
+The web service is divided into two main components:
+
+API Component:
+This segment comprises several endpoints:
+
+POST /api/session: This endpoint initiates a session by accepting a JSON object with text detailing the user's web page requirements. It returns a JSON object (Session object) with session ID, initial requirements, and a list of web page objects. These objects include version, preview link, and user comments.
+GET /api/session/<session_id>: Retrieves a session object using the session ID.
+PUT /api/session/<session_id>/webpage/<version>: Used for adding or saving comments on a specific webpage version. It takes a webpage object as input.
+GET /api/session/<session_id>/webpage/<version>: Fetches a webpage object based on session ID and version.
+POST /api/session/<session_id>/webpage/<version>/generate: Triggers the generation of a new webpage version. The request should include a JSON object with an OpenAI token, and the response will be a new webpage object with an updated version.
+Webserver Component:
+This part manages the display and interaction with HTML pages, with routes defined as follows:
+
+/webpage/<session_id>/<web_page_version>/<resource>: This route serves dynamic resources like HTML, CSS, JavaScript, and other assets like images, based on the session and version.
+/static/js/<resource>: A repository for static JavaScript libraries.
+/static/css/<resource>: Stores static CSS files.
+/static/img/<resource>: A repository for static images.
+This structure allows for dynamic web page creation and version management through a chat-based interface, leveraging the capabilities of Python and web development frameworks.
