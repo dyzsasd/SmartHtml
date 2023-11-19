@@ -64,7 +64,7 @@ class OpenAIResult(Result):
             return None
         return self.raw[start:end].strip()
 
-    def extract_javascript(self):
+    def javascript(self):
         """
         Extracts JavaScript code from a text content.
         The JavaScript code is assumed to be within ```javascript ... ```
@@ -86,7 +86,7 @@ class OpenAIEngine(object):
         self.client = OpenAI(api_key=app_key)
         self._model = model
     
-    def generate_web_page(self, messages: List[OpenAIMessage]):
+    def generate_code(self, messages: List[OpenAIMessage]):
         response = self.client.chat.completions.create(
             model=self._model,
             messages=[

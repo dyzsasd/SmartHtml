@@ -18,7 +18,7 @@ def create_session():
     session = Session.create_new_session(data["requirements"])
     
     messages = [engine.message_type.user_message(session.initial_requirements)]
-    result = engine_instance.generate_html(messages)
+    result = engine_instance.generate_code(messages)
     
     web_page = WebPage.create_new_web_page(result.html(), result.css(), result.javascript())
     session.add_web_page(web_page)
