@@ -7,8 +7,8 @@ from ..core.engine import openai as engine
 from ..config import config
 
 api = Blueprint('api', __name__)
-engine_instance = engine.engine_type(config["openai"]["app_key"])
-db_url = config["sqlite"]["url"]
+engine_instance = engine.engine_cls(config["engine"]["app_key"])
+db_url = config["db"]["url"]
 
 
 @api.route('/session', methods=['POST'])

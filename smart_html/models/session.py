@@ -2,10 +2,9 @@ from datetime import datetime
 from typing import List
 import uuid
 
-from .base import BaseModel
 from .web_page import WebPage
 
-class Session(BaseModel):
+class Session(object):
     @classmethod
     def create_new_session(cls, initial_requierments):
         return cls(str(uuid.uuid4()), initial_requierments, list(), datetime.utcnow())
@@ -20,7 +19,7 @@ class Session(BaseModel):
         self.web_pages.append(web_page)
 
     def to_dict(self):
-        """Serialize the object to a JSON string."""
+        """Serialize the object to dict."""
         web_page_jsons = [
             {
                 **web_page.to_dict(),
