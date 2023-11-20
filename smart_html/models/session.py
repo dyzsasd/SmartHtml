@@ -23,7 +23,7 @@ class Session(object):
         web_page_jsons = [
             {
                 **web_page.to_dict(),
-                **{"url": "/".join(["", "demo", "session", self._id, "webpage", web_page._id])}
+                **{"url": "/".join(["", "demo", "session", self._id, "webpage", web_page._id, "page.html"])}
             }
             for web_page in self.web_pages
         ]
