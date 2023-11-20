@@ -5,13 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-config = {
-    "db": {
-        "backend": os.getenv("db_backend", "sqlite"),
-        "sqlite_path": "mydatabase.db",
-        "firebase_cred_file": os.getenv('firebase_cred_file'),
-    },
-    "engine": {
-        "app_key": os.getenv('openai_key')
-    }
-}
+
+class Config:
+    DB_BACKEND = os.getenv("db_backend", "sqlite")
+    DB_SQLITE_PATH = "mydatabase.db"
+    DB_FIREBASE_CRED = os.getenv('firebase_cred_file')
+
+    ENGINE_OPENAI_APP_KEY = os.getenv('openai_key')

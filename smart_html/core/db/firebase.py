@@ -1,5 +1,4 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import firestore
 from flask import g
 
 from ...models.session import Session
@@ -8,12 +7,8 @@ from .base import DBClient
 
 class FireBase(DBClient):
     @classmethod
-    def get_client(cls, cred_file):
+    def get_client(cls):
         if 'db_client' not in g:
-            # Initialize Firebase Admin
-            cred = credentials.Certificate(cred_file)
-            firebase_admin.initialize_app(cred)
-
             # Get Firestore database instance
             firebase_client = firestore.client()
             g.db_client = cls(firebase_client)

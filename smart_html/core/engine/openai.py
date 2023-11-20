@@ -94,7 +94,3 @@ class OpenAIEngine(object):
             ] + [m.to_api_message() for m in messages]
         )
         return OpenAIResult(response.choices[0].message.content)
-
-
-engine_cls = OpenAIEngine
-message_type = OpenAIMessage

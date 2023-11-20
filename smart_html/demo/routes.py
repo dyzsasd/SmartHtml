@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 from flask import Blueprint, Response, current_app
 
 from ..models.web_page import WebPage
-from ..config import config
 
 demo = Blueprint('demo', __name__)
 
