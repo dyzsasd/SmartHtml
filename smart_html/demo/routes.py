@@ -1,16 +1,13 @@
 from bs4 import BeautifulSoup
-from flask import Blueprint, Response
+from flask import Blueprint, Response, current_app
 
 from ..models.web_page import WebPage
-from ..core.db import sqlite as db
 from ..config import config
 
 demo = Blueprint('demo', __name__)
-db_url = config["db"]["url"]
-
 
 def find_web_page(session_id: str, webpage_id: str) -> WebPage:
-    session = db.get_client(db_url).load_from_db(session_id=session_id)
+    session = current_app.get_db_client().load_from_db(session_id=session_id)
     if session is None:
         return None
 

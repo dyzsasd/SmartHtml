@@ -5,7 +5,7 @@ import sqlite3
 from flask import g
 
 from ...models.session import Session
-
+from .base import DBClient
 
 def get_db_connection(db_url):
     conn = sqlite3.connect(db_url)
@@ -35,13 +35,13 @@ def init_db(db_url):
         conn.commit()
 
 
-class SQLiteClient(object):
+class SQLiteClient(DBClient):
     @classmethod
     def get_client(cls, db_url):
-        if 'sql_db' not in g:
+        if 'db_client' not in g:
             conn = get_db_connection(db_url)
-            g.client = cls(conn)
-        return g.client
+            g.db_client = cls(conn)
+        return g.db_client
 
     def __init__(self, conn):
         self.conn = conn
