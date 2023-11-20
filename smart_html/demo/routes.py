@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from flask import Blueprint, Response
 
 from ..models.web_page import WebPage
@@ -23,7 +24,18 @@ def find_web_page(session_id: str, webpage_id: str) -> WebPage:
 def serve_html(session_id, webpage_id):
     web_page = find_web_page(session_id, webpage_id)
     if web_page:
-        return Response(web_page.html, mimetype='text/html')
+        html_content = web_page.html
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        # Add feedback.js to the HTML head
+        new_script_tag = soup.new_tag("script", src="/feedback.js")
+        soup.head.append(new_script_tag)
+
+        # Add an additional HTML block to the body
+        new_html_block = BeautifulSoup('<div>Your additional HTML block here</div>', 'html.parser')
+        soup.body.append(new_html_block)
+
+        return Response(str(soup), mimetype='text/html')
     return 'Demo not found', 404
 
 @demo.route('/session/<session_id>/webpage/<webpage_id>/scripts.js')

@@ -50,101 +50,12 @@ paths:
                 $ref: '#/components/schemas/Session'
         '404':
           description: Session not found.
-
-  /api/session/{session_id}/webpage/{version}:
-    put:
-      summary: Update a webpage version
-      description: Adds or saves comments on a specific webpage version.
-      parameters:
-        - in: path
-          name: session_id
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: version
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/WebPage'
-      responses:
-        '200':
-          description: Webpage updated successfully.
-        '404':
-          description: Webpage not found.
-
-    get:
-      summary: Get a specific webpage version
-      description: Fetches a webpage object based on session ID and version.
-      parameters:
-        - in: path
-          name: session_id
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: version
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Webpage data retrieved successfully.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebPage'
-        '404':
-          description: Webpage not found.
-
-  /api/session/{session_id}/webpage/{version}/generate:
-    post:
-      summary: Generate a new webpage version
-      description: Triggers the generation of a new webpage version using OpenAI.
-      parameters:
-        - in: path
-          name: session_id
-          required: true
-          schema:
-            type: string
-        - in: path
-          name: version
-          required: true
-          schema:
-            type: integer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                openai_token:
-                  type: string
-                  description: OpenAI API token for processing.
-      responses:
-        '201':
-          description: New webpage version generated.
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/WebPage'
-        '400':
-          description: Invalid request.
-        '404':
-          description: Session or webpage not found.
-
 components:
   schemas:
     Session:
       type: object
       properties:
-        session_id:
+        id:
           type: string
         initial_requirements:
           type: string
@@ -152,23 +63,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/WebPage'
-
-    WebPage:
-      type: object
-      properties:
-        version:
-          type: integer
-        preview_link:
+        created_at:
           type: string
-          format: uri
-        user_comments:
-          type: array
-          items:
-            $ref: '#/components/schemas/UserComment'
-    UserComment:
+          format: date-time
+    WebPage:
       type: object
       properties:
         id:
           type: string
-        comment:
+        url:
           type: string
+        html:
+          type: string
+        css:
+          type: string
+        javascript:
+          type: string
+        created_at:
+          type: string
+          format: date-time
