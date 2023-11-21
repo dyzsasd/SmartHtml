@@ -12,3 +12,4 @@ class Config:
     DB_FIREBASE_CRED = os.getenv('firebase_cred_file')
 
     ENGINE_OPENAI_APP_KEY = os.getenv('openai_key')
+    WEB_APP_HOST = os.getenv('web_app_host')
