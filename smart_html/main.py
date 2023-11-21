@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 from smart_html.api.routes import api
 from smart_html.demo.routes import demo
@@ -19,6 +19,11 @@ app.register_blueprint(demo, url_prefix='/demo')
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
