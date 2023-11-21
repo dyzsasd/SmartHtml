@@ -6,10 +6,9 @@ cd ${ROOT_DIR}
 
 # Define your image name
 IMAGE_NAME="smart-html"
-TAG="latest"
-VERSION="0.1.0"
+TAG=$(git rev-parse --short HEAD)
 PROJECT_ID="ethanwebcraft"
 
 # Build the Docker image
 echo "Building Docker image..."
-docker build -t $IMAGE_NAME -t gcr.io/$PROJECT_ID/$IMAGE_NAME:$TAG -t gcr.io/$PROJECT_ID/$IMAGE_NAME:$VERSION .
+docker build -t $IMAGE_NAME -t europe-docker.pkg.dev/ethanwebcraft/imf/$IMAGE_NAME:$TAG .
