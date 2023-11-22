@@ -17,8 +17,8 @@ app.register_blueprint(api, url_prefix='/api')
 app.register_blueprint(demo, url_prefix='/demo')
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def index():
+    return render_template('index.html')
 
 @app.route('/privacy-policy')
 def privacy_policy():
