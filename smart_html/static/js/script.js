@@ -3,9 +3,11 @@ document.getElementById('requirementForm').addEventListener('submit', function(e
     
     const requirements = document.getElementById('requirements').value;
     const data = { requirements: requirements };
-    const spinner = document.getElementById('spinner');
+    const spinnerWrapper = document.getElementById('spinnerWrapper');
 
-    spinner.style.display = 'block';
+    // Show spinner wrapper
+    spinnerWrapper.style.display = 'flex';
+    requirements.disabled = true; // Disable the textarea
 
     fetch('/api/session', {
         method: 'POST',
@@ -16,12 +18,16 @@ document.getElementById('requirementForm').addEventListener('submit', function(e
     })
     .then(response => response.json())
     .then(data => {
-        spinner.style.display = 'none';
+        // Hide spinner and re-enable the textarea
+        spinnerWrapper.style.display = 'none';
+        requirements.disabled = false;
         window.location.href = data.web_pages[0].url;
     })
     .catch((error) => {
         console.error('Error:', error);
 
-        spinner.style.display = 'none';
+        // Hide spinner and re-enable the textarea in case of error
+        spinnerWrapper.style.display = 'none';
+        requirements.disabled = false;
     });
 });
