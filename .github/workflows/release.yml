@@ -21,11 +21,11 @@ jobs:
       id: slug
       run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
 
-    - name: Log in to Google Artifact Registry
-      uses: google-github-actions/setup-gcloud@main
+     # Authenticate to Google Cloud
+    - name: Authenticate to GCP
+      uses: google-github-actions/auth@v0.4.0
       with:
-        service_account_key: ${{ secrets.GCP_SA_KEY }}
-        project_id: ethanwebcraft
+        credentials_json: ${{ secrets.GCP_INFRA_KEY }}
 
     - name: Configure Docker for Google Artifact Registry
       run: gcloud auth configure-docker europe-docker.pkg.dev
