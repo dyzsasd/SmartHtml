@@ -22,7 +22,7 @@ jobs:
       run: echo "::set-output name=sha7::$(echo ${GITHUB_SHA} | cut -c1-7)"
 
     - name: Log in to Google Artifact Registry
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@main
       with:
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ethanwebcraft
