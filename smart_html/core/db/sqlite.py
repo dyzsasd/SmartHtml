@@ -79,4 +79,3 @@ class SQLiteClient(DBClient):
 
 
 get_client = SQLiteClient.get_client
-
