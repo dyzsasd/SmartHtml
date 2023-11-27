@@ -204,3 +204,5 @@ pyrightconfig.json
 .ionide
 .DS_Store
 .env
+
+mydatabase.db
