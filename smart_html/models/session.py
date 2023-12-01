@@ -14,9 +14,11 @@ class Session(object):
         self.initial_requirements = initial_requirements
         self.web_pages = web_pages
         self.created_at = created_at
+        self.is_processing = True
 
     def add_web_page(self, web_page: WebPage):
         self.web_pages.append(web_page)
+        self.is_processing = False
 
     def to_dict(self, host=None):
         """Serialize the object to dict."""
