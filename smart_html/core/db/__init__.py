@@ -2,7 +2,7 @@ from firebase_admin import credentials, initialize_app, firestore
 from flask import Flask
 
 from .firebase import FireBase
-from .sqlite import SQLiteClient, init_db as init_sql
+from .sqlite import SQLiteClient
 
 def init_db(app: Flask):
     if app.config.get("DB_BACKEND") == "firebase":
@@ -14,5 +14,4 @@ def init_db(app: Flask):
         app.get_db_client = lambda : client
     else:
         db_path = app.config.get("DB_SQLITE_PATH", "mydatabase.db")
-        init_sql(db_path)
         app.get_db_client = lambda : SQLiteClient.get_client(db_path)

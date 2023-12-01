@@ -15,11 +15,12 @@ def create_session():
     """Create session and generate the first version of the webpage"""
     data = request.json
     session = Session.create_new_session(data["requirements"])
+    web_page = WebPage.create_new_web_page()
     
     messages = [current_app.message_type.user_message(session.initial_requirements)]
     result = current_app.engine.generate_code(messages)
 
-    web_page = WebPage.create_new_web_page(result.html(), result.css(), result.javascript())
+    web_page.add_code(result.html(), result.css(), result.javascript())
     session.add_web_page(web_page)
     current_app.get_db_client().save_session(session)
 
@@ -31,19 +32,20 @@ def create_session_async():
     """Create session and generate the first version of the webpage"""
     data = request.json
     session = Session.create_new_session(data["requirements"])
+    web_page = WebPage.create_new_web_page()
+    session.add_web_page(web_page)
 
-    db_client = current_app.get_db_client()
+    get_db_func = current_app.get_db_client
     engine = current_app.engine
 
-    db_client.save_session(session)
+    get_db_func().save_session(session)
 
     def generate_web_page():
         messages = [current_app.message_type.user_message(session.initial_requirements)]
         result = engine.generate_code(messages)
 
-        web_page = WebPage.create_new_web_page(result.html(), result.css(), result.javascript())
-        session.add_web_page(web_page)
-        db_client.save_session(session)
+        web_page.add_code(result.html(), result.css(), result.javascript())
+        get_db_func().save_session(session)
 
     current_app.task_runner.submit_task(generate_web_page)
 

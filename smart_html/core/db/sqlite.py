@@ -12,29 +12,6 @@ def get_db_connection(db_url):
     return conn
 
 
-def init_db(db_url):
-    conn = sqlite3.connect(db_url)
-    cursor = conn.cursor()
-
-    # Check if the table exists
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='sessions';")
-    table_exists = cursor.fetchone()
-
-    if not table_exists:
-        print("initing sessions")
-        cursor.execute('''
-            CREATE TABLE sessions (
-                id TEXT PRIMARY KEY,
-                initial_requirements TEXT NOT NULL,
-                web_pages TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                is_processing BOOL NOT NULL
-            );
-        ''')
-        conn.commit()
-
-
 class SQLiteClient(DBClient):
     thread_local = threading.local()
 
@@ -51,13 +28,12 @@ class SQLiteClient(DBClient):
     def save_session(self, session: Session):
         self.conn.execute(
             '''
-                INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at, is_processing)
-                VALUES (?, ?, ?, ?, ?, ?)
+                INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at)
+                VALUES (?, ?, ?, ?, ?)
                 ON CONFLICT(id)
                 DO UPDATE SET
                     web_pages=excluded.web_pages,
-                    updated_at=excluded.updated_at,
-                    is_processing=excluded.is_processing;
+                    updated_at=excluded.updated_at;
             ''', 
             (
                 session._id, 
@@ -65,7 +41,6 @@ class SQLiteClient(DBClient):
                 json.dumps([wp.to_dict() for wp in session.web_pages]),
                 session.created_at, 
                 datetime.utcnow(),
-                int(session.is_processing),
             ),
         )
         self.conn.commit()
@@ -80,7 +55,6 @@ class SQLiteClient(DBClient):
                 "initial_requirements": session_data['initial_requirements'],
                 "web_pages": web_pages,
                 "created_at": session_data['created_at'],
-                "is_processing": bool(session_data["is_processing"]),
             })
         return None
 

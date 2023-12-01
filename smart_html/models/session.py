@@ -14,11 +14,9 @@ class Session(object):
         self.initial_requirements = initial_requirements
         self.web_pages = web_pages
         self.created_at = created_at
-        self.is_processing = True
 
     def add_web_page(self, web_page: WebPage):
         self.web_pages.append(web_page)
-        self.is_processing = False
 
     def to_dict(self, host=None):
         """Serialize the object to dict."""
@@ -34,7 +32,6 @@ class Session(object):
             "initial_requirements": self.initial_requirements,
             "web_pages": web_page_jsons,
             "created_at": self.created_at.isoformat(),
-            "is_processing": self.is_processing,
         }
 
     @classmethod
