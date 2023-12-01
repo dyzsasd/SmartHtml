@@ -1,8 +1,7 @@
 from datetime import datetime
 import json
 import sqlite3
-
-from flask import g
+import threading
 
 from ...models.session import Session
 from .base import DBClient
@@ -37,12 +36,14 @@ def init_db(db_url):
 
 
 class SQLiteClient(DBClient):
+    thread_local = threading.local()
+
     @classmethod
     def get_client(cls, db_url):
-        if 'db_client' not in g:
+        if not hasattr(cls.thread_local, "db_client"):
             conn = get_db_connection(db_url)
-            g.db_client = cls(conn)
-        return g.db_client
+            cls.thread_local.db_client = cls(conn)
+        return cls.thread_local.db_client
 
     def __init__(self, conn):
         self.conn = conn
@@ -53,7 +54,10 @@ class SQLiteClient(DBClient):
                 INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at, is_processing)
                 VALUES (?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id)
-                DO UPDATE SET web_pages=excluded.web_pages, updated_at=updated_at, is_processing=is_processing;
+                DO UPDATE SET
+                    web_pages=excluded.web_pages,
+                    updated_at=excluded.updated_at,
+                    is_processing=excluded.is_processing;
             ''', 
             (
                 session._id, 
@@ -61,7 +65,7 @@ class SQLiteClient(DBClient):
                 json.dumps([wp.to_dict() for wp in session.web_pages]),
                 session.created_at, 
                 datetime.utcnow(),
-                session.is_processing,
+                int(session.is_processing),
             ),
         )
         self.conn.commit()
@@ -76,7 +80,7 @@ class SQLiteClient(DBClient):
                 "initial_requirements": session_data['initial_requirements'],
                 "web_pages": web_pages,
                 "created_at": session_data['created_at'],
-                "is_processing": session_data["is_processing"],
+                "is_processing": bool(session_data["is_processing"]),
             })
         return None
 

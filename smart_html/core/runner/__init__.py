@@ -6,6 +6,6 @@ from .thread_task_runner import ThreadTaskRunner
 def init_runner(app: Flask):
     celery_broker = app.config.get("CELERY_BROKER", "")
     if celery_broker != "":
-        app.task_runner = ThreadTaskRunner()
-    else:
         app.task_runner = CeleryTaskRunner("smart_html_runner", celery_broker)
+    else:
+        app.task_runner = ThreadTaskRunner()

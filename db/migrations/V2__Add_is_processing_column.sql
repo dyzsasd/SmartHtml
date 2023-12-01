@@ -1,1 +1,1 @@
-ALTER TABLE sessions ADD COLUMN is_processing BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE sessions ADD COLUMN is_processing BOOLEAN NOT NULL DEFAULT 0;
