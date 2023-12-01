@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task in Progress</title>
+    <link rel="stylesheet" href="{{ url_for('demo.static', filename='css/style.css') }}"> <!-- Link to your CSS file -->
+    <script src="{{ url_for('demo.static', filename='js/script.js') }}" defer></script> <!-- Link to your JavaScript file -->
+    <meta name="get-webpage-url" content="{{ url_for('api.get_webpage', session_id=session_id,  webpage_id=webpage_id) }}">
+    <meta name="demo-url" content="{{ url_for('demo.serve_html', session_id=session_id, webpage_id=webpage_id) }}">
+</head>
+<body>
+    <div id="loading-container">
+        <!-- Animation placeholder -->
+        <div id="animation">
+            <!-- Insert animation here (e.g., GIF, CSS animation) -->
+            <img src="{{ url_for('demo.static', filename='img/hacker_animation.gif') }}" alt="Hacker coding animation"> 
+        </div>
+
+        <!-- Message for users -->
+        <p id="message">Your web page is generating, please wait a bit...</p>
+    </div>
+</body>
+</html>

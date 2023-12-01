@@ -18,12 +18,11 @@ class Session(object):
     def add_web_page(self, web_page: WebPage):
         self.web_pages.append(web_page)
 
-    def to_dict(self, host=None):
+    def to_dict(self):
         """Serialize the object to dict."""
         web_page_jsons = [
             {
                 **web_page.to_dict(),
-                **{"url": "/".join([host or "", "demo", "session", self._id, "webpage", web_page._id, "page.html"])}
             }
             for web_page in self.web_pages
         ]

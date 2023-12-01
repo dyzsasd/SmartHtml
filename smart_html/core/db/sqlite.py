@@ -1,8 +1,7 @@
 from datetime import datetime
 import json
 import sqlite3
-
-from flask import g
+import threading
 
 from ...models.session import Session
 from .base import DBClient
@@ -13,35 +12,15 @@ def get_db_connection(db_url):
     return conn
 
 
-def init_db(db_url):
-    conn = sqlite3.connect(db_url)
-    cursor = conn.cursor()
-
-    # Check if the table exists
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='sessions';")
-    table_exists = cursor.fetchone()
-
-    if not table_exists:
-        print("initing sessions")
-        cursor.execute('''
-            CREATE TABLE sessions (
-                id TEXT PRIMARY KEY,
-                initial_requirements TEXT NOT NULL,
-                web_pages TEXT NOT NULL,
-                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        ''')
-        conn.commit()
-
-
 class SQLiteClient(DBClient):
+    thread_local = threading.local()
+
     @classmethod
     def get_client(cls, db_url):
-        if 'db_client' not in g:
+        if not hasattr(cls.thread_local, "db_client"):
             conn = get_db_connection(db_url)
-            g.db_client = cls(conn)
-        return g.db_client
+            cls.thread_local.db_client = cls(conn)
+        return cls.thread_local.db_client
 
     def __init__(self, conn):
         self.conn = conn
@@ -52,7 +31,9 @@ class SQLiteClient(DBClient):
                 INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at)
                 VALUES (?, ?, ?, ?, ?)
                 ON CONFLICT(id)
-                DO UPDATE SET web_pages=excluded.web_pages, updated_at=updated_at;
+                DO UPDATE SET
+                    web_pages=excluded.web_pages,
+                    updated_at=excluded.updated_at;
             ''', 
             (
                 session._id, 

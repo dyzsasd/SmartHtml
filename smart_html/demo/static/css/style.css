@@ -1,0 +1,21 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+#loading-container {
+    margin-top: 20%;
+}
+
+#animation img {
+    width: 50%;
+    max-width: 300px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    #animation img {
+        width: 80%;
+    }
+}
