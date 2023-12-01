@@ -34,6 +34,7 @@ class Session(object):
             "initial_requirements": self.initial_requirements,
             "web_pages": web_page_jsons,
             "created_at": self.created_at.isoformat(),
+            "is_processing": self.is_processing,
         }
 
     @classmethod

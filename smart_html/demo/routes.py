@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
-from flask import Blueprint, Response, current_app
+from flask import Blueprint, Response, current_app, render_template
 
+from ..models.session import Session
 from ..models.web_page import WebPage
 
 demo = Blueprint('demo', __name__)
 
-def find_web_page(session_id: str, webpage_id: str) -> WebPage:
-    session = current_app.get_db_client().load_from_db(session_id=session_id)
+def find_web_page(session: Session, webpage_id: str) -> WebPage:
     if session is None:
         return None
 
@@ -18,7 +18,16 @@ def find_web_page(session_id: str, webpage_id: str) -> WebPage:
 
 @demo.route('/session/<session_id>/webpage/<webpage_id>/page.html')
 def serve_html(session_id, webpage_id):
-    web_page = find_web_page(session_id, webpage_id)
+    session = current_app.get_db_client().load_from_db(session_id=session_id)
+
+    if session is None:
+        return 'Demo not found', 404
+
+    if session.is_processing:
+        return render_template("coding_hacker.html", session_id = session_id, webpage_id = webpage_id)
+
+    web_page = find_web_page(session, webpage_id)
+
     if web_page:
         html_content = web_page.html
         soup = BeautifulSoup(html_content, 'html.parser')
@@ -36,14 +45,16 @@ def serve_html(session_id, webpage_id):
 
 @demo.route('/session/<session_id>/webpage/<webpage_id>/scripts.js')
 def serve_javascript(session_id, webpage_id):
-    web_page = find_web_page(session_id, webpage_id)
+    session = current_app.get_db_client().load_from_db(session_id=session_id)
+    web_page = find_web_page(session, webpage_id)
     if web_page:
         return Response(web_page.javascript, mimetype='application/javascript')
     return 'scripts.js not found', 404
 
 @demo.route('/session/<session_id>/webpage/<webpage_id>/styles.css')
 def serve_css(session_id, webpage_id):
-    web_page = find_web_page(session_id, webpage_id)
+    session = current_app.get_db_client().load_from_db(session_id=session_id)
+    web_page = find_web_page(session, webpage_id)
     if web_page:
         return Response(web_page.css, mimetype='text/css')
     return 'stypes.css not found', 404

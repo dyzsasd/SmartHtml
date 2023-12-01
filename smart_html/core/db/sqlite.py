@@ -29,7 +29,8 @@ def init_db(db_url):
                 initial_requirements TEXT NOT NULL,
                 web_pages TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                is_processing BOOL NOT NULL
             );
         ''')
         conn.commit()
@@ -49,10 +50,10 @@ class SQLiteClient(DBClient):
     def save_session(self, session: Session):
         self.conn.execute(
             '''
-                INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at)
-                VALUES (?, ?, ?, ?, ?)
+                INSERT INTO sessions (id, initial_requirements, web_pages, created_at, updated_at, is_processing)
+                VALUES (?, ?, ?, ?, ?, ?)
                 ON CONFLICT(id)
-                DO UPDATE SET web_pages=excluded.web_pages, updated_at=updated_at;
+                DO UPDATE SET web_pages=excluded.web_pages, updated_at=updated_at, is_processing=is_processing;
             ''', 
             (
                 session._id, 
@@ -60,6 +61,7 @@ class SQLiteClient(DBClient):
                 json.dumps([wp.to_dict() for wp in session.web_pages]),
                 session.created_at, 
                 datetime.utcnow(),
+                session.is_processing,
             ),
         )
         self.conn.commit()
@@ -74,6 +76,7 @@ class SQLiteClient(DBClient):
                 "initial_requirements": session_data['initial_requirements'],
                 "web_pages": web_pages,
                 "created_at": session_data['created_at'],
+                "is_processing": session_data["is_processing"],
             })
         return None
 
