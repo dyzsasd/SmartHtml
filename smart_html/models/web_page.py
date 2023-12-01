@@ -23,7 +23,7 @@ class WebPage(object):
         self.updated_at = datetime.utcnow()
 
     def in_processing(self):
-        return self.html is None and self.updated_at == self.created_at
+        return self.html is None
 
     def to_dict(self):
         """Serialize the object to dict."""
