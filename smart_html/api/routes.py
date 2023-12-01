@@ -75,10 +75,10 @@ def get_session(session_id):
 def get_webpage(session_id, webpage_id):
     session = current_app.get_db_client().load_from_db(session_id=session_id)
     if session is None:
-        return None
+        return 'session not found', 404
 
     for wp in session.web_pages:
         if wp._id == webpage_id:
-            jsonify(_webpage_to_api_response(session_id, wp, host=current_app.config.get("WEB_APP_HOST")))
+            return jsonify(_webpage_to_api_response(session_id, wp, host=current_app.config.get("WEB_APP_HOST")))
 
-    return 404
+    return 'webpage not found', 404

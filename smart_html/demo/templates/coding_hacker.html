@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task in Progress</title>
-    <link rel="stylesheet" href="{{ url_for('demo.static', filename='css/styles.css') }}"> <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="{{ url_for('demo.static', filename='css/style.css') }}"> <!-- Link to your CSS file -->
     <script src="{{ url_for('demo.static', filename='js/script.js') }}" defer></script> <!-- Link to your JavaScript file -->
-    <meta name="get-session-url" content="{{ url_for('api.get_session', session_id=session_id) }}">
+    <meta name="get-webpage-url" content="{{ url_for('api.get_webpage', session_id=session_id,  webpage_id=webpage_id) }}">
     <meta name="demo-url" content="{{ url_for('demo.serve_html', session_id=session_id, webpage_id=webpage_id) }}">
 </head>
 <body>
