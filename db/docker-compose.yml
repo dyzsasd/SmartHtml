@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  flyway:
+    image: flyway/flyway
+    command: -url=jdbc:sqlite:/db/mydatabase.sqlite -locations=filesystem:/migrations migrate
+    volumes:
+      - ./db.sqlite:/db/db.sqlite
+      - ./migrations:/migrations
+    depends_on:
+      - app

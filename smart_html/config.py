@@ -8,7 +8,7 @@ load_dotenv()
 
 class Config:
     DB_BACKEND = os.getenv("db_backend", "sqlite")
-    DB_SQLITE_PATH = "mydatabase.db"
+    DB_SQLITE_PATH = "db/mydatabase.db"
 
     DB_FIREBASE_CRED = os.getenv('firebase_cred_file')
     if DB_BACKEND == "firebase" and not DB_FIREBASE_CRED:  # DB_FIREBASE_CRED is empty or None

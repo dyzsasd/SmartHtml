@@ -11,6 +11,8 @@ git clone git@github.com:dyzsasd/SmartHtml.git
 cd SmartHtml
 pip install -r requirements.txt
 cp .env.tempalte .env
+# create and migrate db schema
+bin/migrate.sh
 bin/run_dev.sh
 ```
 
