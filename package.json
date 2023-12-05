@@ -1,0 +1,17 @@
+{
+  "scripts": {
+    "install-client": "npm install",
+    "install-service": "pip install -r requirements.txt",
+    "install-all": "npm run install-client && npm run install-service",
+    "run-client": "npm run dev --workspace=smart_html_client",
+    "run-service": "python smart_html_service/main.py",
+    "dev": "concurrently --names \"client ,service\" --prefix-colors \"blue,magenta\" \"npm run run-client\" \"npm run run-service\""
+  },
+  "workspaces": [
+    "smart_html_client",
+    "smart_html_service"
+  ],
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

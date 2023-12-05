@@ -206,3 +206,6 @@ pyrightconfig.json
 .env
 
 mydatabase.db
+
+# Node dependencies
+node_modules

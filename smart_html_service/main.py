@@ -1,11 +1,16 @@
+import sys
+import os
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from flask import Flask, render_template
 
-from smart_html.api.routes import api
-from smart_html.demo.routes import demo
-from smart_html.core.db import init_db
-from smart_html.core.engine import init_engine
-from smart_html.core.runner import init_runner
-from smart_html.config import Config
+from smart_html_service.api.routes import api
+from smart_html_service.demo.routes import demo
+from smart_html_service.core.db import init_db
+from smart_html_service.core.engine import init_engine
+from smart_html_service.core.runner import init_runner
+from smart_html_service.config import Config
 
 
 app = Flask(__name__)
