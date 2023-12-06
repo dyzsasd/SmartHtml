@@ -1,3 +1,17 @@
-.prompt-input{
-    display: flex;
+.prompt-textarea{
+    width: 800px;
+    height: 50px;
+
+    & > textarea {
+        width: 100%;
+        min-height: 40px;
+        overflow-y: hidden;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        resize: none;
+    }
 }

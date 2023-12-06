@@ -9,7 +9,7 @@
     "install-all": "npm run install-client && npm run install-service",
     "run-client": "vite --config smart_html_client/vite.config.js",
     "run-service": "python smart_html_service/main.py",
-    "dev": "concurrently --names \"client ,service\" --prefix-colors \"blue,magenta\" \"npm run run-client\" \"npm run run-service\""
+    "dev": "concurrently --names \"client,server\" --prefix-colors \"blue,magenta\" \"npm run run-client\" \"npm run run-service\""
   },
   "devDependencies": {
     "@types/node-sass": "^4.11.7",
