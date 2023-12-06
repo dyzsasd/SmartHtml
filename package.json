@@ -12,14 +12,16 @@
     "dev": "concurrently --names \"client ,service\" --prefix-colors \"blue,magenta\" \"npm run run-client\" \"npm run run-service\""
   },
   "devDependencies": {
-    "concurrently": "^8.2.2",
+    "@types/node-sass": "^4.11.7",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
+    "concurrently": "^8.2.2",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "sass": "^1.69.5",
     "vite": "^5.0.0"
   },
   "dependencies": {
