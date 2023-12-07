@@ -5,6 +5,7 @@ Welcome to the Smart HTML Generator API! This tool is designed to help you effor
 
 ## Installation
 Please use Python >= 3.11
+Please use Node.Js >= 18
 
 ```bash
 git clone git@github.com:dyzsasd/SmartHtml.git
@@ -16,14 +17,9 @@ bin/migrate.sh
 bin/run_dev.sh
 ```
 
-## Usage
-```bash
-curl --location 'https://smart-html-37k3xbcrqq-od.a.run.app/api/session' \
---header 'Content-Type: application/json' \
---data '{
-    "requirements": "我希望设计一个个人主页，在上面以照片墙的形式展示分享我的照片"
-}'
-```
+## Startup
+Step 1: Run npm run install-all
+Step 2: Run npm run dev
 
 In this example, the requirement is to design a personal homepage displaying photos in a photo wall format. You can replace the `requirements` field with your specific webpage needs.
 
