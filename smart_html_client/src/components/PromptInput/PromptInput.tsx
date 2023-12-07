@@ -3,7 +3,7 @@ import React, { useState } from "react"
 import styles from "./PromptInput.module.scss";
 
 interface PromptInputProps{
-    handleEnterDown: () => void;
+    handleEnterDown: (prompt: string) => void;
 }
 
 const PromptInput: React.FC<PromptInputProps> = ({handleEnterDown}) => {
@@ -17,17 +17,13 @@ const PromptInput: React.FC<PromptInputProps> = ({handleEnterDown}) => {
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (!event.shiftKey && event.key === 'Enter') {
             event.preventDefault();
-            handleEnterDown()
-            console.log('Enter was pressed, your prompt is:', prompt);
+            if (prompt && prompt != ""){
+                handleEnterDown(prompt)
+            }
         }
     };
 
-    
-
-
-    console.log(prompt)
     return <div className={styles["prompt-textarea"]}>
-        
         <textarea value={prompt} rows={prompt ? prompt?.split("\n").length : 1} onChange={handleChange} onKeyDown={handleKeyDown} placeholder="Prompt"/>
     </div>
 }

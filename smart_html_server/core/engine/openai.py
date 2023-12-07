@@ -1,3 +1,4 @@
+import re
 from typing import List
 
 from openai import OpenAI
@@ -43,21 +44,30 @@ class OpenAIResult(Result):
     def __init__(self, raw: str):
         self.raw = raw
 
+    @staticmethod
+    def _find_between(content, start_marker, end_marker):
+        """
+        Helper method to extract content between two markers.
+        """
+        pattern = re.escape(start_marker) + r'(.*?)' + re.escape(end_marker)
+        matches = re.search(pattern, content, re.DOTALL)
+        if matches:
+            return matches.group(1).strip()
+        return None
+
     def html(self):
         """
         Extracts HTML code from a text content.
         The HTML code is assumed to be within ```html ... ```
         """
-        start_marker = "```html"
-        end_marker = "```"
-        start = self.raw.find(start_marker)
-        if start == -1:
+        # Extract the entire HTML block first
+        html_block = self._find_between(self.raw, '```html', '```')
+        if html_block is None:
             return None
-        start += len(start_marker)
-        end = self.raw.find(end_marker, start)
-        if end == -1:
-            return None
-        return self.raw[start:end].strip()
+        
+        # Then extract the body content from the HTML block
+        body_content = self._find_between(html_block, '<body>', '</body>')
+        return body_content
 
     def css(self):
         """

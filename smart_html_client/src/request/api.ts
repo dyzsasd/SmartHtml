@@ -4,6 +4,6 @@ import {
     GenerateHtmlRequest, GenerateHtmlResponse
 } from "./model"
 
-const generateHtml = async (requestModel: GenerateHtmlRequest): Promise<GenerateHtmlResponse> => {
+export const generateHtml = async (requestModel: GenerateHtmlRequest): Promise<GenerateHtmlResponse> => {
     return request.post<GenerateHtmlResponse>('/session', requestModel);
 };
