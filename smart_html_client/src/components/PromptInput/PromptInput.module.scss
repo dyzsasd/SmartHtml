@@ -19,9 +19,27 @@
         position: absolute;
         right: 10px;
         bottom: 12px;
-        
-        &.svg-container-color {
-            color: black;
+       
+        .loading-animation-box{
+            width: 18px;
+            height: 18px;
+        }
+
+        svg{
+            color: gray;
+            cursor: not-allowed;
+            transition: .3s all;
+        }
+
+        &.svg-container-deepen {
+            svg{
+                color: black;
+                cursor: pointer;
+
+                &:hover{
+                    transform: scale(130%);
+                }
+            }
         }
     }
 }

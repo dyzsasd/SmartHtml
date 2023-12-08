@@ -9,9 +9,7 @@ import HtmlIframe from "../../components/HtmlIframe"
 
 import styles from './Main.module.scss';
 
-
 const Main: React.FC = () => {
-
     const [viewHtml, setViewHtml] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
@@ -47,7 +45,10 @@ const Main: React.FC = () => {
             error={error}
         />
         <div className={viewHtml ? `${styles['input-title-hidden']} ${styles['input-title']}` : styles['input-title']}>Let's create your dream web page</div>
-        <PromptInput handleEnterDown={sendPrompt}/>
+        <PromptInput 
+            handleEnterDown={sendPrompt}
+            loading={loading}
+        />
     </div>
 }
 

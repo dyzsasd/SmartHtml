@@ -18,6 +18,7 @@ const HtmlIframe: React.FC<HtmlIframeProps> = ({view, loading, html, css, js, er
     const iframeBoxRef = useRef<HTMLDivElement | null>(null)
 
     useEffect(() => {
+        // Calculate the proportion to prepare for changing the window size in the future
         const calculateScaleFactor = () => {
             if (iframeBoxRef.current){
                 const targetWidth = 1920;
