@@ -2,7 +2,7 @@
     position: relative;
     width: 800px;
 
-    .prompt-textarea{
+    .prompt-textarea {
         width: 100%;
         min-height: 40px;
         overflow-y: hidden;
@@ -13,6 +13,12 @@
         font-family: Arial, sans-serif;
         font-size: 18px;
         resize: none;
+
+        &:focus-visible {
+            outline: none;
+            border: 1px solid gray !important;
+        }
+
     }
 
     .svg-container {
@@ -20,12 +26,12 @@
         right: 10px;
         bottom: 12px;
        
-        .loading-animation-box{
+        .loading-animation-box {
             width: 18px;
             height: 18px;
         }
 
-        svg{
+        svg {
             color: gray;
             cursor: not-allowed;
             transition: .3s all;
