@@ -2,6 +2,7 @@ annotated-types==0.6.0
 anyio==3.7.1
 beautifulsoup4==4.12.2
 blinker==1.7.0
+celery==5.3.6
 certifi==2023.11.17
 click==8.1.7
 distro==1.8.0
