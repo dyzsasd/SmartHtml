@@ -10,14 +10,15 @@ class WebPage(JsonMixin):
     def create_new_web_page(cls):
         return cls(str(uuid.uuid4()))
 
-    def __init__(self, _id: str):
+    def __init__(self, _id: str, created_at=datetime.utcnow(), updated_at=datetime.utcnow(), html=None, css=None, javascript=None, comments=None, parent=None):
         self._id = _id
-        self.created_at = datetime.utcnow()
-        self.updated_at = self.created_at
-        self.html = None
-        self.css = None
-        self.javascript = None
-        self.comments = None
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.html = html
+        self.css = css
+        self.javascript = javascript
+        self.comments = comments
+        self.parent = parent
 
     def add_code(self, html, css, javascript):
         self.html = html
