@@ -22,7 +22,8 @@ const Main: React.FC = () => {
             
             setSessionReponse(result)
             setLoading(false)
-        }catch{
+        }catch(e){
+            console.log(e)
             setError(true)
         }
     }

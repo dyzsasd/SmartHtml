@@ -1,10 +1,4 @@
-import sys
-import os
-
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 from flask import Flask, render_template
-from flask_cors import CORS
 
 from smart_html_server.api.routes import api
 from smart_html_server.demo.routes import demo
@@ -32,8 +26,5 @@ def index():
 def privacy_policy():
     return render_template('privacy_policy.html')
 
-CORS(app)
-
 if __name__ == '__main__':
     app.run(debug=True)
-

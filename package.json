@@ -6,9 +6,10 @@
   "scripts": {
     "install-client": "npm install",
     "install-server": "pip install -r requirements.txt",
-    "install-all": "npm run install-client && npm run install-server",
+    "install-all": "npm run install-client && npm run install-server && ",
     "run-client": "vite --config smart_html_client/vite.config.js",
-    "run-server": "python smart_html_server/main.py",
+    "run-server": "cross-env PYTHONPATH=. python smart_html_server/main.py",
+    "build": "vite build --config smart_html_client/vite.config.js",
     "dev": "concurrently --names \"client,server\" --prefix-colors \"blue,magenta\" \"npm run run-client\" \"npm run run-server\""
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^4.2.0",
     "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
     "eslint": "^8.53.0",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
