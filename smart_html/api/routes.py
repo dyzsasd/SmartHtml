@@ -7,13 +7,13 @@ api = Blueprint('api', __name__)
 
 
 def _webpage_to_api_response(session_id: str, wp: WebPage, host):
-    wp_dict = wp.to_dict()
+    wp_dict = wp.to_json()
     wp_dict['url'] = host + url_for("demo.serve_html", session_id=session_id, webpage_id=wp._id)
     wp_dict['in_processing'] = wp.in_processing()
     return wp_dict
 
 def _session_to_api_response(session: Session, host):
-    session_dict = session.to_dict()
+    session_dict = session.to_json()
     session_dict["web_pages"] = [
         _webpage_to_api_response(session._id, wp, host=host)
         for wp in session.web_pages

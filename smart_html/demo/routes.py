@@ -31,14 +31,6 @@ def serve_html(session_id, webpage_id):
         html_content = web_page.html
         soup = BeautifulSoup(html_content, 'html.parser')
 
-        # Add feedback.js to the HTML head
-        new_script_tag = soup.new_tag("script", src="/feedback.js")
-        soup.head.append(new_script_tag)
-
-        # Add an additional HTML block to the body
-        new_html_block = BeautifulSoup('<div>Your additional HTML block here</div>', 'html.parser')
-        soup.body.append(new_html_block)
-
         return Response(str(soup), mimetype='text/html')
     return 'Demo not found', 404
 
