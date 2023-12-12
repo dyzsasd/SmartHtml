@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, current_app, url_for
 
+from ..models.comment import WebPageComment, GlobalComment, ElementComment
 from ..models.session import Session
 from ..models.web_page import WebPage
 
@@ -79,6 +80,31 @@ def get_webpage(session_id, webpage_id):
 
     for wp in session.web_pages:
         if wp._id == webpage_id:
+            return jsonify(_webpage_to_api_response(session_id, wp, host=current_app.config.get("WEB_APP_HOST")))
+
+    return 'webpage not found', 404
+
+
+@api.route('/session/<session_id>/webpage/<webpage_id>', methods=['PUT'])
+def add_comments(session_id, webpage_id):
+    data = request.json
+
+    global_comment = GlobalComment(data['global'])
+    element_comments = [
+        ElementComment(_id, value)
+        for _id, value in data['element_comments'].items()
+    ]
+
+    comments = WebPageComment(global_comment, element_comments)
+
+    session = current_app.get_db_client().load_from_db(session_id=session_id)
+    if session is None:
+        return 'session not found', 404
+
+    for wp in session.web_pages:
+        if wp._id == webpage_id:
+            wp.comments = comments
+            current_app.get_db_client().save_session(session)
             return jsonify(_webpage_to_api_response(session_id, wp, host=current_app.config.get("WEB_APP_HOST")))
 
     return 'webpage not found', 404

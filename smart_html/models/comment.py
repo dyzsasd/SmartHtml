@@ -10,12 +10,12 @@ class Comment(JsonMixin):
 
 class GlobalComment(Comment):
     def __init__(self, text):
-        super.__init__(text)
+        super(GlobalComment, self).__init__(text)
 
 
 class ElementComment(Comment):
     def __init__(self, _id, text):
-        super.__init__(text)
+        super(ElementComment, self).__init__(text)
         self._id = _id
 
 
