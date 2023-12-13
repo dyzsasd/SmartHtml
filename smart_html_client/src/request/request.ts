@@ -1,10 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://127.0.0.1:5000/api',
+  baseURL: __MODE__ == "development" ? "/proxy/cors/api" : `${__SERVICE_HOST__}/api`,
   headers: {'Content-Type': 'application/json;charset=utf-8'}
 });
-console.log(import.meta)
 
 axiosInstance.interceptors.request.use(config => {
   // config.headers['Authorization'] = 'Bearer '+ localStorage.getItem("access_token");
