@@ -3,6 +3,7 @@ FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
+COPY ./db /usr/src/app/db
 
 # Copy dependencies
 COPY requirements.txt requirements.txt

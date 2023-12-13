@@ -1,21 +1,19 @@
-# 选择Node.js作为基础镜像
 FROM node:18 as build-stage
 
-# 设置工作目录
 WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-# 安装项目依赖
 RUN npm install
 
+COPY .env ./
 COPY ./smart_html_client ./smart_html_client
 
 RUN npm run build
 
 FROM nginx:alpine as production-stage
 COPY --from=build-stage /usr/src/app/smart_html_client/dist /usr/share/nginx/html
-COPY ./smart_html_client/default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 

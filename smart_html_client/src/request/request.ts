@@ -4,7 +4,6 @@ const axiosInstance = axios.create({
   baseURL: '/api',
   headers: {'Content-Type': 'application/json;charset=utf-8'}
 });
-console.log(import.meta)
 
 axiosInstance.interceptors.request.use(config => {
   // config.headers['Authorization'] = 'Bearer '+ localStorage.getItem("access_token");
