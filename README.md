@@ -28,8 +28,14 @@ cp .env.tempalte .env
 ## Startup
 ```bash
 npm run dev
-# open http://localhost:5173/
 ```
+
+## Production
+```bash
+docker-compose up -d
+```
+
+Then we can open http://localhost:5173/
 
 First time entering the page:
 
