@@ -9,7 +9,7 @@ RUN npm install
 COPY .env ./
 COPY ./smart_html_client ./smart_html_client
 
-RUN npm run build
+CMD ["npm", "run", "build"]
 
 FROM nginx:alpine as production-stage
 COPY --from=build-stage /usr/src/app/smart_html_client/dist /usr/share/nginx/html
