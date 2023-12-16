@@ -4,6 +4,7 @@ import sqlite3
 import threading
 
 from ...models.session import Session
+from ...models.web_page import WebPage
 from .base import DBClient
 
 def get_db_connection(db_url):
@@ -38,7 +39,7 @@ class SQLiteClient(DBClient):
             (
                 session._id, 
                 session.initial_requirements, 
-                json.dumps([wp.to_dict() for wp in session.web_pages]),
+                json.dumps([wp.to_json() for wp in session.web_pages]),
                 session.created_at, 
                 datetime.utcnow(),
             ),
@@ -48,14 +49,17 @@ class SQLiteClient(DBClient):
     def load_from_db(self, session_id):
         session_data = self.conn.execute('SELECT * FROM sessions WHERE id = ?', (session_id,)).fetchone()
         if session_data:
-            web_pages = json.loads(session_data['web_pages'])
+            web_pages = [
+                WebPage.from_json(dct)
+                for dct in json.loads(session_data['web_pages'])
+            ]
 
-            return Session.from_dict({
-                "id": session_data['id'],
-                "initial_requirements": session_data['initial_requirements'],
-                "web_pages": web_pages,
-                "created_at": session_data['created_at'],
-            })
+            return Session(
+                _id = session_data['id'],
+                initial_requirements = session_data['initial_requirements'],
+                web_pages =  web_pages,
+                created_at = session_data['created_at'],
+            )
         return None
 
 
