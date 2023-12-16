@@ -89,7 +89,7 @@ def get_webpage(session_id, webpage_id):
     return 'webpage not found', 404
 
 
-@api.route('/session/<session_id>/webpage/<webpage_id>', methods=['PUT'])
+@api.route('/session/<session_id>/webpage/<webpage_id>/comments', methods=['PUT'])
 def add_comments(session_id, webpage_id):
     data = request.json
 

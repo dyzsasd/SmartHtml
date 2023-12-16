@@ -30,6 +30,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Session'
+  /api/session/async:
+    post:
+      summary: Initiate session asynchronously
+      description: Creates a new session asynchronously with initial requirements for web page creation.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                requirements:
+                  type: string
+                  description: Detailed text of user's web page requirements.
+      responses:
+        '201':
+          description: Session created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
 
   /api/session/{session_id}:
     get:
@@ -50,6 +71,92 @@ paths:
                 $ref: '#/components/schemas/Session'
         '404':
           description: Session not found.
+
+  /api/session/{session_id}/webpage/{webpage_id}/comments:
+    put:
+      summary: Add comments to a webpage
+      description: Allows a user to add comments to a specific webpage in a session.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: webpage_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                global:
+                  type: string
+                  description: General comment about the webpage.
+                element_comments:
+                  type: object
+                  additionalProperties:
+                    type: string
+      responses:
+        '200':
+          description: Web page updated with comments.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebPage'
+
+  /api/session/{session_id}/webpage/{webpage_id}/update:
+    put:
+      summary: Initiate webpage update
+      description: Initiates an asynchronous update of the webpage.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: webpage_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webpage update initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebPage'
+
+  /api/session/{session_id}/webpage/{webpage_id}:
+    get:
+      summary: Get a webpage
+      description: Fetches a webpage object in a session to check its generation status.
+      parameters:
+        - in: path
+          name: session_id
+          required: true
+          schema:
+            type: string
+        - in: path
+          name: webpage_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Webpage data retrieved successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebPage'
+        '404':
+          description: Webpage not found.
+
 components:
   schemas:
     Session:
@@ -82,3 +189,14 @@ components:
         created_at:
           type: string
           format: date-time
+        in_processing:
+          type: boolean
+        comments:
+          type: object
+          properties:
+            global_comment:
+              type: string
+            element_comments:
+              type: object
+              additionalProperties:
+                type: string
