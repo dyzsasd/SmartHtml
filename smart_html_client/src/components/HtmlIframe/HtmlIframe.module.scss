@@ -1,0 +1,56 @@
+.html-iframe-box {
+    width: max(80vw, 60vh); // TODO: This may lead to some bugs, such as extremely small scaling, Use media queries in next version
+    height: calc(max(80vw, 60vh) * 0.5625);
+    border: 1px solid rgba(128, 128, 128, 0.5);
+    transform: scale(1);
+    opacity: 1;
+    transition: all .3s;
+    border-radius: 5px;
+
+    &.hidden {
+        transform: scale(0);
+        opacity: 0;
+        position: absolute;
+        width: 0vw;
+        height: 0vh;
+    }
+}
+
+.loading-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+
+    .loading-animation {
+        border: 3px solid #f3f3f3; /* Light grey background */
+        border-top: 3px solid #ffec97; /* Blue color */
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+
+        &.loading-animation-error{
+            border-top: 5px solid red;
+            animation: none;
+        }
+    }
+      
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+}
+
+.iframe-box{
+    height: 100%;
+    width: 100%;
+
+    iframe {
+        width: 100%;
+        height: 100%;
+        overflow: hidden !important;
+        border: 0 !important;
+    }
+}

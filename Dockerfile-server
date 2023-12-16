@@ -3,22 +3,23 @@ FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
+COPY ./db /usr/src/app/db
 
 # Copy dependencies
 COPY requirements.txt requirements.txt
-
+COPY .env .env
 # Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the current directory contents into the container at /usr/src/app
-COPY smart_html smart_html
+COPY ./smart_html_server ./smart_html_server
 
 # Make port 5000 available to the world outside this container
 EXPOSE 5000
 
 # Define environment variable
 ENV FLASK_ENV=production
-ENV FLASK_APP=smart_html/main.py
+ENV FLASK_APP=smart_html_server/main.py
 
 # Run app.py when the container launches
 CMD ["flask", "run", "--host=0.0.0.0"]

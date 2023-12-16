@@ -1,0 +1,51 @@
+.textarea-container {
+    position: relative;
+    width: 800px;
+
+    .prompt-textarea {
+        width: 100%;
+        min-height: 40px;
+        overflow-y: hidden;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        resize: none;
+
+        &:focus-visible {
+            outline: none;
+            border: 1px solid gray !important;
+        }
+
+    }
+
+    .svg-container {
+        position: absolute;
+        right: 10px;
+        bottom: 12px;
+       
+        .loading-animation-box {
+            width: 18px;
+            height: 18px;
+        }
+
+        svg {
+            color: gray;
+            cursor: not-allowed;
+            transition: .3s all;
+        }
+
+        &.svg-container-deepen {
+            svg{
+                color: black;
+                cursor: pointer;
+
+                &:hover{
+                    transform: scale(130%);
+                }
+            }
+        }
+    }
+}
