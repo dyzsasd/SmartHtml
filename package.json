@@ -6,7 +6,7 @@
   "scripts": {
     "install-client": "npm install",
     "install-server": "pip install -r requirements.txt",
-    "install-all": "npm run install-client && npm run install-server && ",
+    "install-all": "npm run install-client && npm run install-server",
     "run-client": "vite --config smart_html_client/vite.config.js",
     "run-server": "cross-env PYTHONPATH=. python smart_html_server/main.py",
     "build": "vite build --config smart_html_client/vite.config.js",
