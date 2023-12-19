@@ -19,11 +19,11 @@ class FireBase(DBClient):
 
     def save_session(self, session: Session):
         sessions_ref = self.firebase_client.collection('sessions')
-        sessions_ref.document(session._id).set(session.to_dict())
+        sessions_ref.document(session._id).set(session.to_json())
 
     def load_from_db(self, session_id):
         sessions_ref = self.firebase_client.collection('sessions')
         doc = sessions_ref.document(session_id).get()
         if doc.exists:
-            return Session.from_dict(doc.to_dict())
+            return Session.from_json(doc.to_json())
         return None
