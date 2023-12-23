@@ -132,7 +132,7 @@ def update_webpage(session_id, webpage_id):
         return 'webpage not found', 404
 
     if generated_webpage is not None:
-        jsonify(_webpage_to_api_response(generated_webpage))
+        jsonify(_webpage_to_api_response(generated_webpage, generated_webpage, host=current_app.config.get("WEB_APP_HOST")))
 
     if current_webpage.comments is None:
         return 'no comments found for the webpage, cannot generate new version', 406
