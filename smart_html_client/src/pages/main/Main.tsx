@@ -21,8 +21,8 @@ const Main: React.FC = () => {
             const result = await generateHtml({ requirements: prompt })
             console.debug("updateRequestHtml => result: ", result);
 
-            if (result.id) {
-                localStorage.setItem('sessionId', result.id);
+            if (result._id) {
+                localStorage.setItem('sessionId', result._id);
             }
 
             setSessionReponse(result)
@@ -58,12 +58,14 @@ const Main: React.FC = () => {
     }, []);
 
     return <div className={styles.main}>
-        <MemoHtml
-            loading={loading}
-            webPage={sessionReponse?.web_pages[0]}
-            error={error}
-            delayLoading={true}
-        />
+        {sessionReponse &&
+            <MemoHtml
+                loading={loading}
+                webPage={sessionReponse?.web_pages[0]}
+                error={error}
+                delayLoading={true}
+            />
+        }
         <div className={sessionReponse?.web_pages[0] ? `${styles['input-title-hidden']} ${styles['input-title']}` : styles['input-title']}>Let's create your dream web page</div>
         <PromptInput
             handleEnterDown={sendPrompt}

@@ -15,7 +15,7 @@ export interface WebPage {
 
 export interface Session {
     created_at: string,
-    id: string,
+    _id: string,
     initial_requirements: string,
     web_pages: WebPage[]
 }
