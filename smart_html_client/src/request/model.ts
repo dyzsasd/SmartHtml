@@ -13,7 +13,7 @@ export interface WebPage {
     url: string
 }
 
-export interface GenerateHtmlResponse {
+export interface Session {
     created_at: string,
     id: string,
     initial_requirements: string,

@@ -1,21 +1,40 @@
 import React, { useEffect, useRef, useState } from "react"
 
 import styles from "./HtmlIframe.module.scss";
+import { WebPage } from "../../request/model";
 
 interface HtmlIframeProps { 
-    view: boolean;
     loading: boolean;
     error?: boolean;
-    html?: string;
-    css?: string;
-    js?: string;
+    webPage?: WebPage;
+    delayLoading?: boolean;
 }
 
-const HtmlIframe: React.FC<HtmlIframeProps> = ({view, loading, html, css, js, error}) => {
+const HtmlIframe: React.FC<HtmlIframeProps> = ({loading, webPage, error, delayLoading}) => {
 
     const [scaleFactor, setScaleFactor] = useState(1);
-
     const iframeBoxRef = useRef<HTMLDivElement | null>(null)
+    
+    const [loadingAnimation, setLoadingAnimation] = useState<Boolean>(true)
+
+    /**
+        If HTML is not fully rendered, it can lead to incomplete initialization of page animations, 
+        resulting in errors such as a scale factor of 0 during calculation. Therefore, 
+        we need to implement delayed loading.
+     */
+    useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+    
+        if (!loading && delayLoading) {
+            timeoutId = setTimeout(() => {
+                setLoadingAnimation(loading);
+            }, 350);
+        } else {
+            setLoadingAnimation(loading);
+        }
+    
+        return () => clearTimeout(timeoutId);
+    }, [delayLoading, loading]);
 
     useEffect(() => {
         // Calculate the proportion to prepare for changing the window size in the future
@@ -23,18 +42,20 @@ const HtmlIframe: React.FC<HtmlIframeProps> = ({view, loading, html, css, js, er
             if (iframeBoxRef.current){
                 const targetWidth = 1920;
                 const iframeWidth = iframeBoxRef.current.offsetWidth;
+                console.log(iframeWidth)
                 const newScaleFactor = iframeWidth / targetWidth;
                 setScaleFactor(newScaleFactor);
             }
         };
-
+        
         calculateScaleFactor();
+
         window.addEventListener('resize', calculateScaleFactor);
 
         return () => {
             window.removeEventListener('resize', calculateScaleFactor);
         };
-    }, [html, css, js, loading]);
+    }, [webPage, loadingAnimation]);
     
     const srcDoc = `
         <!DOCTYPE html>
@@ -53,18 +74,18 @@ const HtmlIframe: React.FC<HtmlIframeProps> = ({view, loading, html, css, js, er
                     border: 0;
                     overflow: hidden;
                 }
-                ${css}
+                ${webPage?.css}
             </style>
         </head>
         <body>
-            ${html}
-            <script>${js}</script>
+            ${webPage?.html}
+            <script>${webPage?.javascript}</script>
         </body>
         </html>
     `;
                 
-    return <div className={view ? `${styles["html-iframe-box"]}` : `${styles["html-iframe-box"]} ${styles["hidden"]}`}>
-        {loading ? 
+    return <div className={webPage ? `${styles["html-iframe-box"]}` : `${styles["html-iframe-box"]} ${styles["hidden"]}`}>
+        {loadingAnimation ? 
             <div className={styles["loading-box"]}>
                 <div className={`${styles["loading-animation"]} ${error ? styles["loading-animation-error"] : ""}`}></div>
             </div> : 
