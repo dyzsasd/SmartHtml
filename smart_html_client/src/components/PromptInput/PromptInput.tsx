@@ -2,13 +2,17 @@ import React, { useEffect, useState } from "react"
 
 import styles from "./PromptInput.module.scss";
 import EnterSvg from "../../assets/enter.svg?react";
+import MenuSvg from "../../assets/menu.svg?react";
+import ResetSvg from "../../assets/reset.svg?react";
+
 
 interface PromptInputProps {
     handleEnterDown: (prompt: string) => void;
     loading: boolean;
+    reset: () => void;
 }
 
-const PromptInput: React.FC<PromptInputProps> = ({ handleEnterDown, loading}) => {
+const PromptInput: React.FC<PromptInputProps> = ({ handleEnterDown, loading, reset}) => {
 
     const [prompt, setPrompt] = useState<string>();
     const [loadingViewString, setLoadingViewString] = useState<string>("");
@@ -42,6 +46,12 @@ const PromptInput: React.FC<PromptInputProps> = ({ handleEnterDown, loading}) =>
         
         <div className={prompt ? `${styles["svg-container"]} ${styles["svg-container-deepen"]}` : `${styles["svg-container"]}`}>
             {loading ? <div className={styles["loading-animation-box"]}>{loadingViewString}</div> : <EnterSvg />}
+            <div className={styles["menu-box"]}>
+                <div className={styles["dropdown-content"]}>
+                    <div onClick={reset}><ResetSvg/>Reset</div>
+                </div>
+                <MenuSvg/>
+            </div>
         </div>
     </div>
 }

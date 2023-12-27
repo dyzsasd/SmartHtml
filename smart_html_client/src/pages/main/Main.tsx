@@ -57,6 +57,13 @@ const Main: React.FC = () => {
         fetchSessionData();
     }, []);
 
+    const reset = () => {
+        localStorage.removeItem('sessionId')
+        setSessionReponse(undefined)
+        setError(false)
+        setLoading(false)
+    }
+
     return <div className={styles.main}>
         {sessionReponse &&
             <MemoHtml
@@ -69,6 +76,7 @@ const Main: React.FC = () => {
         <div className={sessionReponse?.web_pages[0] ? `${styles['input-title-hidden']} ${styles['input-title']}` : styles['input-title']}>Let's create your dream web page</div>
         <PromptInput
             handleEnterDown={sendPrompt}
+            reset={reset}
             loading={loading}
         />
     </div>

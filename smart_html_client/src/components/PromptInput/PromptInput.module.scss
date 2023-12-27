@@ -25,6 +25,8 @@
         position: absolute;
         right: 10px;
         bottom: 12px;
+        display: flex;
+        gap: 10px;
        
         .loading-animation-box {
             width: 18px;
@@ -35,6 +37,52 @@
             color: gray;
             cursor: not-allowed;
             transition: .3s all;
+        }
+
+        .menu-box{
+            position: relative;
+
+            .dropdown-content {
+                visibility: hidden;
+                opacity: 0;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+                transition: opacity 0.5s, visibility 0.5s;
+                bottom: calc(100% + 12px);
+
+                & div {
+                    cursor: pointer;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                    display: flex;
+                    align-items: center;
+                    color: #333333;
+                    text-align: center;
+
+                    svg{
+                        margin-right: 10px;
+                        color: #333333;
+                        cursor: pointer;
+
+                        &:hover{
+                            transform: none;
+                        }
+                    }
+
+                    &:hover{
+                        color: black;
+                    }
+                }
+            }
+        }
+
+        &.svg-container-deepen .menu-box:hover .dropdown-content{
+            visibility: visible;
+            opacity: 1;
         }
 
         &.svg-container-deepen {
