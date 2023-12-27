@@ -16,6 +16,8 @@ def _webpage_to_api_response(session_id: str, wp: WebPage, host):
 
 
 def _session_to_api_response(session: Session, host):
+    if not session:
+        return None
     session_dict = session.to_json()
     session_dict["web_pages"] = [
         _webpage_to_api_response(session._id, wp, host=host)
