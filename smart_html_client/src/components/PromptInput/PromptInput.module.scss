@@ -18,7 +18,6 @@
             outline: none;
             border: 1px solid gray !important;
         }
-
     }
 
     .svg-container {
@@ -27,7 +26,7 @@
         bottom: 12px;
         display: flex;
         gap: 10px;
-       
+
         .loading-animation-box {
             width: 18px;
             height: 18px;
@@ -36,11 +35,20 @@
         svg {
             color: gray;
             cursor: not-allowed;
-            transition: .3s all;
+            transition: 0.3s all;
         }
 
-        .menu-box{
+        .menu-box {
             position: relative;
+
+            &:hover .dropdown-content {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            svg {
+                cursor: pointer !important;
+            }
 
             .dropdown-content {
                 visibility: hidden;
@@ -48,9 +56,11 @@
                 position: absolute;
                 background-color: #f9f9f9;
                 min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
                 z-index: 1;
-                transition: opacity 0.5s, visibility 0.5s;
+                transition:
+                    opacity 0.5s,
+                    visibility 0.5s;
                 bottom: calc(100% + 12px);
 
                 & div {
@@ -63,34 +73,28 @@
                     color: #333333;
                     text-align: center;
 
-                    svg{
+                    svg {
                         margin-right: 10px;
                         color: #333333;
-                        cursor: pointer;
 
-                        &:hover{
+                        &:hover {
                             transform: none;
                         }
                     }
 
-                    &:hover{
+                    &:hover {
                         color: black;
                     }
                 }
             }
         }
 
-        &.svg-container-deepen .menu-box:hover .dropdown-content{
-            visibility: visible;
-            opacity: 1;
-        }
-
         &.svg-container-deepen {
-            svg{
+            svg {
                 color: black;
                 cursor: pointer;
 
-                &:hover{
+                &:hover {
                     transform: scale(130%);
                 }
             }

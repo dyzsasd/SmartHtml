@@ -42,7 +42,6 @@ const HtmlIframe: React.FC<HtmlIframeProps> = ({loading, webPage, error, delayLo
             if (iframeBoxRef.current){
                 const targetWidth = 1920;
                 const iframeWidth = iframeBoxRef.current.offsetWidth;
-                console.log(iframeWidth)
                 const newScaleFactor = iframeWidth / targetWidth;
                 setScaleFactor(newScaleFactor);
             }
