@@ -62,17 +62,12 @@ const HtmlIframe: React.FC<HtmlIframeProps> = ({loading, webPage, error, delayLo
         <html lang="en">
         <head>
             <style>
-                body{
-                    // width: ${scaleFactor * 1920}px;
-                    // height: ${scaleFactor * 1080}px;
+                html{
+                    overflow-y: auto;
+                    overflow-x: hidden;
+                    width: 1920px;
+                    height: 1080px;
                     transform-origin: top left;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 0;
-                    padding: 0;
-                    border: 0;
-                    overflow: hidden;
                     transform: scale(${scaleFactor});
                 }
                 ${webPage?.css}
