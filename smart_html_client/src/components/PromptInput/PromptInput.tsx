@@ -23,14 +23,19 @@ const PromptInput: React.FC<PromptInputProps> = ({ handleEnterDown, loading, res
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (!loading){
-            if (!event.shiftKey && event.key === 'Enter') {
+            if (!event.shiftKey && event.key === 'Enter' && !event.nativeEvent.isComposing) {
                 event.preventDefault();
-                if (prompt && prompt != "") {
-                    handleEnterDown(prompt)
-                }
+                sentPrompt()         
             }
         }
     };
+
+    const sentPrompt = () => {
+        if (prompt && prompt != "") {
+            setPrompt("")
+            handleEnterDown(prompt)
+        }
+    }
 
     useEffect(() => {
         if (loading) {
@@ -45,7 +50,7 @@ const PromptInput: React.FC<PromptInputProps> = ({ handleEnterDown, loading, res
         <textarea className={styles["prompt-textarea"]} value={prompt} rows={prompt ? prompt.split("\n").length : 1} onChange={handleChange} onKeyDown={handleKeyDown} placeholder="Prompt" />
         
         <div className={prompt ? `${styles["svg-container"]} ${styles["svg-container-deepen"]}` : `${styles["svg-container"]}`}>
-            {loading ? <div className={styles["loading-animation-box"]}>{loadingViewString}</div> : <EnterSvg />}
+            {loading ? <div className={styles["loading-animation-box"]}>{loadingViewString}</div> : <div onClick={sentPrompt}><EnterSvg/></div>}
             <div className={styles["menu-box"]}>
                 <div className={styles["dropdown-content"]}>
                     <div onClick={reset}><ResetSvg/>Reset</div>
